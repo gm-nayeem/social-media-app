@@ -30,11 +30,11 @@ const Rightbar = ({ profile }) => {
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">New York</span>
+            <span className="rightbarInfoValue">Paris</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">Madrid</span>
+            <span className="rightbarInfoValue">Argentina</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Relationship:</span>
@@ -49,7 +49,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Katherine Langford</span>
+            <span className="rightbarFollowingName">Katherine</span>
           </div>
           <div className="rightbarFollowing">
             <img
@@ -57,7 +57,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Katrina Kaif</span>
+            <span className="rightbarFollowingName">Katrina</span>
           </div>
           <div className="rightbarFollowing">
             <img
@@ -65,7 +65,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Deepika Padukone</span>
+            <span className="rightbarFollowingName">Deepika</span>
           </div>
           <div className="rightbarFollowing">
             <img
@@ -73,7 +73,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Urvashi Rautela</span>
+            <span className="rightbarFollowingName">Urvashi</span>
           </div>
           <div className="rightbarFollowing">
             <img
@@ -81,7 +81,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Shilpa Shetty</span>
+            <span className="rightbarFollowingName">Shilpa</span>
           </div>
           <div className="rightbarFollowing">
             <img
@@ -89,7 +89,7 @@ const Rightbar = ({ profile }) => {
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Priyanka Chopra</span>
+            <span className="rightbarFollowingName">Priyanka</span>
           </div>
         </div>
       </>
