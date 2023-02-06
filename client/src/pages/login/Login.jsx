@@ -1,6 +1,26 @@
+import { useState } from "react";
 import "./login.css";
+import { Link } from "react-router-dom";
+import {AuthContext} from '../../context/AuthContext';
+import {loginCall} from '../../context/authApiCalls';
+import { useContext } from "react";
+
 
 const Login = () => {
+  const [user, setUser] = useState(null);
+  const {dispatch} = useContext(AuthContext);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setUser({ ...user, [e.target.name]: value });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(user);
+    loginCall(user, dispatch);
+  }
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -11,15 +31,27 @@ const Login = () => {
           </span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
-            <input placeholder="Email" className="loginInput" />
-            <input placeholder="Password" className="loginInput" />
-            <button className="loginButton">Log In</button>
+          <form className="loginBox" onSubmit={handleSubmit}>
+            <input type="email" name="email"
+              placeholder="Email"
+              className="loginInput"
+              required
+              onChange={handleChange}
+            />
+            <input type="password" name="password" 
+              placeholder="Password"
+              className="loginInput"
+              required
+              onChange={handleChange}
+            />
+            <button className="loginButton" type="submit">Log In</button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
-              Create a New Account
-            </button>
-          </div>
+            <Link to="/register">
+              <button className="loginRegisterButton">
+                Create a New Account
+              </button>
+            </Link>
+          </form>
         </div>
       </div>
     </div>
