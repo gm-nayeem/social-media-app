@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext';
 import {loginCall} from '../../context/authApiCalls';
 import { useContext } from "react";
-
+// import {CircularProgress} from "@mui/icons-material"
 
 const Login = () => {
   const [user, setUser] = useState(null);
-  const {dispatch} = useContext(AuthContext);
+  const {dispatch, isFetching, } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -17,7 +17,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
     loginCall(user, dispatch);
   }
 
@@ -44,7 +43,9 @@ const Login = () => {
               required
               onChange={handleChange}
             />
-            <button className="loginButton" type="submit">Log In</button>
+            <button className="loginButton" type="submit" disabled={isFetching}>
+              {isFetching ? "Loading" : "Log In"}
+            </button>
             <span className="loginForgot">Forgot Password?</span>
             <Link to="/register">
               <button className="loginRegisterButton">
