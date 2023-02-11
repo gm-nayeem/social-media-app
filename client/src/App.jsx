@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
+import Messenger from './pages/messenger/Messenger';
 import Error from './pages/error/Error';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from "react";
@@ -22,6 +23,9 @@ const App = () => {
         />
         <Route path="/login"
           element={!user ? <Login /> : <Navigate to="/" replace />}
+        />
+        <Route path="/messenger"
+          element={user ? <Messenger /> : <Navigate to="/register" replace />}
         />
         {
           user && (
