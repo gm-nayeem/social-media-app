@@ -1,19 +1,19 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@mui/icons-material";
-import {Link} from "react-router-dom";
+import { Search, Person, Chat, Notifications, ArrowDropDown } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
-import {AuthContext} from "../../context/AuthContext";
-import {Logout} from '../../context/AuthAction';
+import { AuthContext } from "../../context/AuthContext";
+import { Logout } from '../../context/AuthAction';
 
 const Topbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const {user, dispatch} = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
 
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link to="/" className="link">
-        <span className="logo">Mernsocial</span>
+          <span className="logo">Mernsocial</span>
         </Link>
       </div>
       <div className="topbarCenter">
@@ -27,31 +27,47 @@ const Topbar = () => {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink" onClick={() => dispatch(Logout())}>Timeline</span>
+          <Link to="/" className="link">
+            <span className="topbarLink">Homepage</span>
+          </Link>
+          <span className="topbarLink">Timeline</span>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
             <Person />
             <span className="topbarIconBadge">1</span>
           </div>
-          <div className="topbarIconItem">
+          {/* <div className="topbarIconItem">
             <Chat />
             <span className="topbarIconBadge">2</span>
+          </div> */}
+          <div className="topbarIconItem">
+            <Link to="/messenger" className="link">
+              <Chat />
+            </Link>
           </div>
           <div className="topbarIconItem">
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`/profile/${user.username}`}>
-        <img 
-          src={user.profilePicture ? PF+user.profilePicture : PF+"person/noAvatar.png"} 
-          alt="" className="topbarImg"/>
-        </Link>
+        <div className="topbarProfile">
+          <Link to={`/profile/${user.username}`}>
+            <img
+              src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
+              alt="" className="topbarImg" />
+          </Link>
+          <div className="profile">
+            <ArrowDropDown className="arrowIcon" />
+            <div className="options">
+              <span>Setting</span>
+              <span onClick={() => dispatch(Logout())}>Logout</span>
+            </div>
+          </div>
+        </div>       
       </div>
     </div>
   );
 }
 
-export default  Topbar;
+export default Topbar;

@@ -10,6 +10,7 @@ export default function Register() {
   const password = useRef();
   const passwordAgain = useRef();
   const navigate = useNavigate();
+  
 
   const handleClick = async (e) => {
     e.preventDefault();
