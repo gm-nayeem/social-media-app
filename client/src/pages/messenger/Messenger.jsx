@@ -6,45 +6,48 @@ import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 export default function Messenger() {
+
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
-    // const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    // const socket = useRef();
+    const socket = useRef();
     const { user } = useContext(AuthContext);
     const scrollRef = useRef();
 
-    // useEffect(() => {
-    //     socket.current = io("ws://localhost:8900");
-    //     socket.current.on("getMessage", (data) => {
-    //         setArrivalMessage({
-    //             sender: data.senderId,
-    //             text: data.text,
-    //             createdAt: Date.now(),
-    //         });
-    //     });
-    // }, []);
+    // socket connection and get message
+    useEffect(() => {
+        socket.current = io("ws://localhost:8900");
+        socket.current.on("getMessage", (data) => {
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now(),
+            });
+        });
+    }, []);
 
-    // useEffect(() => {
-    //     arrivalMessage &&
-    //         currentChat?.members.includes(arrivalMessage.sender) &&
-    //         setMessages((prev) => [...prev, arrivalMessage]);
-    // }, [arrivalMessage, currentChat]);
+    // set message
+    useEffect(() => {
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
+            setMessages((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage, currentChat]);
 
-    // useEffect(() => {
-    //     socket.current.emit("addUser", user._id);
-    //     socket.current.on("getUsers", (users) => {
-    //         setOnlineUsers(
-    //             user.followings.filter((f) => users.some((u) => u.userId === f))
-    //         );
-    //     });
-    // }, [user]);
-
+    // send user and get users
+    useEffect(() => {
+        socket.current.emit("addUser", user._id);
+        socket.current.on("getUsers", (users) => {
+            setOnlineUsers(
+                user.followings.filter((f) => users.some((u) => u.userId === f))
+            );
+        });
+    }, [user]);
 
     // get conversations
     useEffect(() => {
@@ -82,15 +85,17 @@ export default function Messenger() {
             text: newMessage,
         };
 
-        // const receiverId = currentChat.members.find(
-        //     (member) => member !== user._id
-        // );
+        // find receiver
+        const receiverId = currentChat.members.find(
+            (member) => member !== user._id
+        );
 
-        // socket.current.emit("sendMessage", {
-        //     senderId: user._id,
-        //     receiverId,
-        //     text: newMessage,
-        // });
+        // send message to socket server
+        socket.current.emit("sendMessage", {
+            senderId: user._id,
+            receiverId,
+            text: newMessage,
+        });
 
         try {
             const res = await axios.post("http://localhost:5000/api/messages", message);
@@ -127,7 +132,7 @@ export default function Messenger() {
                             <>
                                 <div className="chatBoxTop">
                                     {messages.map((m) => (
-                                        <div ref={scrollRef}>
+                                        <div ref={scrollRef} key={m._id}>
                                             <Message message={m} own={m.sender === user._id} />
                                         </div>
                                     ))}

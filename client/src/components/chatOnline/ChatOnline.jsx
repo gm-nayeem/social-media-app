@@ -9,12 +9,13 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
     useEffect(() => {
         const getFriends = async () => {
-            const res = await axios.get("/users/friends/" + currentId);
+            const res = await axios.get("http://localhost:5000/api/users/friends/" + currentId);
             setFriends(res.data);
         };
 
         getFriends();
     }, [currentId]);
+
 
     useEffect(() => {
         setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
@@ -23,7 +24,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
     const handleClick = async (user) => {
         try {
             const res = await axios.get(
-                `/conversations/find/${currentId}/${user._id}`
+                `http://localhost:5000/api/conversations/find/${currentId}/${user._id}`
             );
             setCurrentChat(res.data);
         } catch (err) {

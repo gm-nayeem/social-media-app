@@ -1,12 +1,13 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications, ArrowDropDown } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Logout } from '../../context/AuthAction';
 
 const Topbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [displayProfile, setDislayProfile] = useState(false);
   const { user, dispatch } = useContext(AuthContext);
 
   return (
@@ -58,8 +59,11 @@ const Topbar = () => {
               alt="" className="topbarImg" />
           </Link>
           <div className="profile">
-            <ArrowDropDown className="arrowIcon" />
-            <div className="options">
+            <ArrowDropDown className="arrowIcon" 
+              onClick={() => setDislayProfile(!displayProfile)}/>
+            <div className="options"
+              style={{display: !displayProfile && "none" }}  
+            >
               <span>Setting</span>
               <span onClick={() => dispatch(Logout())}>Logout</span>
             </div>

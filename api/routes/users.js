@@ -55,6 +55,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get all user
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find();
+    const sendUsers = users.map(user => {
+      const {password, ...others} = user._doc;
+      return others;
+    });
+    res.status(200).json(sendUsers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //get friends
 router.get("/friends/:userId", async (req, res) => {
   try {
@@ -97,7 +111,6 @@ router.put("/:id/follow", async (req, res) => {
 });
 
 //unfollow a user
-
 router.put("/:id/unfollow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {

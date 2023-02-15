@@ -1,5 +1,4 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useEffect } from "react";
 import axios from "axios";
@@ -12,7 +11,17 @@ import { Follow, Unfollow } from "../../context/AuthAction";
 
 const Rightbar = ({ profile }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [users, setUsers] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
+
+  // get all user
+  useEffect(() => {
+    const getUsers = async () => {
+      const res = await axios.get("http://localhost:5000/api/users/all");
+      setUsers(res.data.filter(r => r._id !== currentUser._id));
+    }
+    getUsers();
+  }, []);
 
   // home rightbar
   const HomeRightbar = () => {
@@ -27,7 +36,7 @@ const Rightbar = ({ profile }) => {
         <img className="rightbarAd" src={PF + "ad.png"} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
+          {users.map((u) => (
             <Online key={u.id} user={u} />
           ))}
         </ul>
