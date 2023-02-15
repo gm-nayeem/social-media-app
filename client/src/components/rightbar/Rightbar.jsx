@@ -21,7 +21,7 @@ const Rightbar = ({ profile }) => {
       setUsers(res.data.filter(r => r._id !== currentUser._id));
     }
     getUsers();
-  }, []);
+  }, [currentUser]);
 
   // home rightbar
   const HomeRightbar = () => {
@@ -51,7 +51,7 @@ const Rightbar = ({ profile }) => {
 
     useEffect(() => {
       setFollowed(currentUser.followings.includes(profile?._id));
-    }, [currentUser, profile._id]);
+    }, []);
 
     useEffect(() => {
       const getFriends = async () => {
@@ -63,7 +63,7 @@ const Rightbar = ({ profile }) => {
         }
       }
       getFriends();
-    }, [profile]);
+    }, []);
 
     const handleClick = async () => {
       try {

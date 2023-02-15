@@ -27,7 +27,7 @@ const Sidebar = () => {
       setUsers(res.data.filter(r => r._id !== currentUser._id));
     }
     getUsers();
-  }, []);
+  }, [currentUser]);
 
 
   return (
