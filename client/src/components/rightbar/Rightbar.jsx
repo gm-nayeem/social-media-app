@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from '@mui/icons-material';
 import { Follow, Unfollow } from "../../context/AuthAction";
+import { publicRequest } from "../../utils/makeRequest";
 
 const Rightbar = ({ profile }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -17,7 +18,7 @@ const Rightbar = ({ profile }) => {
   // get all user
   useEffect(() => {
     const getUsers = async () => {
-      const res = await axios.get("http://localhost:5000/api/users/all");
+      const res = await publicRequest.get("/users/all");
       setUsers(res.data.filter(r => r._id !== currentUser._id));
     }
     getUsers();
@@ -120,11 +121,11 @@ const Rightbar = ({ profile }) => {
               <Link to={`/profile/${friend.username}`} className="link" key={friend._id}>
                 <div className="rightbarFollowing">
                   <img
-                    src={friend.profilePicture ? PF + friend.profilePicture : PF + "person/noAvatar.png"}
+                    src={friend.profilePicture ? PF + '/upload/' + friend.profilePicture : PF + "/upload/noAvatar.png"}
                     alt=""
                     className="rightbarFollowingImg"
                   />
-                  <span className="rightbarFollowingName">{friend.username}</span>
+                  <span style={{textTransform: 'capitalize'}} className="rightbarFollowingName">{friend.username}</span>
                 </div>
               </Link>
             ))

@@ -3,6 +3,7 @@ import { useRef } from "react";
 import "./register.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { publicRequest } from "../../utils/makeRequest";
 
 export default function Register() {
   const username = useRef();
@@ -25,7 +26,7 @@ export default function Register() {
       };
       console.log(user)
       try {
-        await axios.post("http://localhost:5000/api/auth/register", user);
+        await publicRequest.post("/auth/register", user);
         navigate("/login");
       } catch (err) {
         console.log(err);

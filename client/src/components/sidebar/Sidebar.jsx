@@ -15,6 +15,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { publicRequest } from "../../utils/makeRequest";
 
 const Sidebar = () => {
   const [users, setUsers] = useState([]);
@@ -23,7 +24,7 @@ const Sidebar = () => {
   // get all user
   useEffect(() => {
     const getUsers = async () => {
-      const res = await axios.get("http://localhost:5000/api/users/all");
+      const res = await publicRequest.get("/users/all");
       setUsers(res.data.filter(r => r._id !== currentUser._id));
     }
     getUsers();

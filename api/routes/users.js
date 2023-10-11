@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 
 //update user
 router.put("/:id", async (req, res) => {
+  console.log('id: ')
+  console.log(req.params.id, req.body.userId);
+
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {
       try {
@@ -14,7 +17,7 @@ router.put("/:id", async (req, res) => {
       }
     }
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
+      await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
       res.status(200).json("Account has been updated");
@@ -44,6 +47,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const userId = req.query.userId;
   const username = req.query.username;
+
   try {
     const user = userId
       ? await User.findById(userId)

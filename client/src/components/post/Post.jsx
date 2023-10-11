@@ -1,11 +1,11 @@
 import "./post.css";
 import { MoreVert } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
 import { useContext } from "react";
 import {AuthContext} from "../../context/AuthContext";
+import { publicRequest } from "../../utils/makeRequest";
 
 
 const Post = ({ post }) => {
@@ -24,7 +24,7 @@ const Post = ({ post }) => {
   useEffect(() => {
     const getUser = async () => {
       try{
-        const res = await axios.get("http://localhost:5000/api/users?userId="+post.userId);
+        const res = await publicRequest.get("/users?userId="+post.userId);
         setUser(res.data)
       } catch(err) {
         console.log(err)
@@ -35,7 +35,7 @@ const Post = ({ post }) => {
 
   const likeHandler = async () => {
     try{
-      await axios.put(`http://localhost:5000/api/posts/${post._id}/like`, {userId: currentUser._id})
+      await publicRequest.put(`/posts/${post._id}/like`, {userId: currentUser._id})
     } catch(err) {
       console.log(err)
     }
@@ -51,7 +51,7 @@ const Post = ({ post }) => {
             <Link to={`/profile/${user.username}`}>
             <img
               className="postProfileImg"
-              src={user.profilePicture ? PF+user.profilePicture : PF+"person/noAvatar.png"}
+              src={user.profilePicture ? PF + '/upload/' +user.profilePicture : PF+"/upload/noAvatar.png"}
               alt=""
             />
             </Link>
@@ -66,7 +66,7 @@ const Post = ({ post }) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={PF+post.img} alt="" />
+          <img className="postImg" src={PF+'/upload/'+post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

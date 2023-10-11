@@ -2,7 +2,7 @@ import "./message.css";
 import { format } from "timeago.js";
 import { useEffect } from "react";
 import { useState } from "react";
-import axios from "axios";
+import { publicRequest } from "../../utils/makeRequest";
 
 export default function Message({ message, own }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,7 +12,7 @@ export default function Message({ message, own }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/users?userId=" + message?.sender);
+        const res = await publicRequest.get("/users?userId=" + message?.sender);
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -26,7 +26,7 @@ export default function Message({ message, own }) {
       <div className="messageTop">
         <img
           className="messageImg"
-          src={user?.profilePicture ? PF+user.profilePicture : PF+"person/noAvatar.png"}
+          src={user?.profilePicture ? PF+'/upload/'+user.profilePicture : PF+"/upload/noAvatar.png"}
           alt=""
         />
         <p className="messageText">{message.text}</p>

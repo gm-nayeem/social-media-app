@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./conversations.css";
+import { publicRequest } from "../../utils/makeRequest";
 
 export default function Conversation({ conversation, currentUser }) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -11,7 +12,7 @@ export default function Conversation({ conversation, currentUser }) {
 
         const getUser = async () => {
             try {
-                const res = await axios("http://localhost:5000/api/users?userId=" + friendId);
+                const res = await publicRequest.get("/users?userId=" + friendId);
                 setUser(res.data);
             } catch (err) {
                 console.log(err);
@@ -26,8 +27,8 @@ export default function Conversation({ conversation, currentUser }) {
                 className="conversationImg"
                 src={
                     user?.profilePicture
-                        ? PF + user.profilePicture
-                        : PF + "person/noAvatar.png"
+                        ? PF + '/upload/' + user.profilePicture
+                        : PF + "/upload/noAvatar.png"
                 }
                 alt=""
             />

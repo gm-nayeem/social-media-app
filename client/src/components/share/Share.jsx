@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { publicRequest } from "../../utils/makeRequest";
 
 const Share = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -29,11 +30,12 @@ const Share = () => {
 
       // upload file
       try{
-        await axios.post("http://localhost:5000/api/upload", data);
+        await publicRequest.post("/upload", data);
       } catch(err) {
         console.log(err);
       }
     }
+    
     // upload post
     try{
       await axios.post("http://localhost:5000/api/posts", newPost);
@@ -50,7 +52,7 @@ const Share = () => {
           <Link to={`/profile/${user.username}`}>
             <img
               className="shareProfileImg"
-              src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"} alt="" />
+              src={user.profilePicture ? PF + '/upload/' + user.profilePicture : PF + "/upload/noAvatar.png"} alt="" />
           </Link>
           <input
             placeholder={`What's in your mind ${user.username}?`}
