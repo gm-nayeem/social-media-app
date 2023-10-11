@@ -19,10 +19,25 @@ const app = express();
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
+const allowedOrigins = [
+  'http://localhost:3000', 
+  // 'https://social-media-app-backend-api.vercel.app'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 //middleware
 app.use(helmet());
 app.use(morgan("dev"));
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 // file storage
