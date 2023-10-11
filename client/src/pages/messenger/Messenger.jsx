@@ -32,6 +32,7 @@ export default function Messenger() {
         });
     }, []);
 
+
     // set message
     useEffect(() => {
         arrivalMessage &&

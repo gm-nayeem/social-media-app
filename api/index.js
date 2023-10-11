@@ -28,7 +28,7 @@ app.use(express.json());
 // file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images");
+    cb(null, "public/images/upload");
   },
   filename: (req, file, cb) => {
     cb(null, req.body.name);
@@ -54,8 +54,9 @@ app.use("/api/messages", messageRoute);
 
 // port and database connection
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Server in running at http://localhost:${PORT}`);
+  console.log(`Server in running successfully`);
   mongoose.connect(
     process.env.MONGO_URL,
     { useNewUrlParser: true },
