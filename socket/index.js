@@ -1,8 +1,10 @@
+require('dotenv').config();
+const PORT = process.env.PORT || 8900;
+const origin = "http://localhost:3000";
+
 // import socket
-const io = require("socket.io")(8900, {
-    cors: {
-        origin: "http://localhost:3000",
-    },
+const io = require("socket.io")(PORT, {
+    cors: { origin }
 });
 
 let users = [];
