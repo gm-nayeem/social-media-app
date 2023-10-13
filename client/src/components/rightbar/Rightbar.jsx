@@ -37,8 +37,8 @@ const Rightbar = ({ profile }) => {
         <img className="rightbarAd" src={PF + "ad.png"} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {users.map((u) => (
-            <Online key={u.id} user={u} />
+          {users.map((u, i) => (
+            <Online key={i} user={u} />
           ))}
         </ul>
       </>

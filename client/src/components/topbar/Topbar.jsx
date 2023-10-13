@@ -9,7 +9,7 @@ const Topbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [displayProfile, setDislayProfile] = useState(false);
   const { user, dispatch } = useContext(AuthContext);
-
+console.log('user: ' + user)
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
